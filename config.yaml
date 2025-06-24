@@ -1,0 +1,43 @@
+freq_bands:
+  delta: [0.5, 4.5]
+  theta: [4.5, 8.5]
+  alpha: [8.5, 11.5]
+  sigma: [11.5, 15.5]
+  beta:  [15.5, 30.0]
+
+selected_features:
+  - pow_freq_bands
+  - spect_edge_freq
+#  - energy_freq_bands
+#  - wavelet_coef_energy
+#  - kurtosis
+#  - skewness
+#  - line_length
+#  - mean
+#  - ptp_amp
+#  - quantile
+#  - rms
+#  - std
+#  - variance
+#  - spect_slope
+#  - zero_crossings
+#  - higuchi_fd
+#  - hjorth_complexity
+#  - hjorth_complexity_spect
+#  - hjorth_mobility
+#  - hjorth_mobility_spect
+#  - teager_kaiser_energy
+#  - phase_lock_val
+#  - spect_corr
+#  - time_corr
+#  - decorr_time
+#  - katz_fd
+  # - samp_entropy   # can cause memory issue
+  # - svd_entropy
+  # - svd_fisher_info
+  # - max_cross_corr
+  # - spect_entropy
+
+
+data_dir: "D:/dataset/syira_speaking_task/AverageST"
+delete_channels: [13, 19] # we going to delete channel, in matlab convention 13 and 19. but in python, this is equivalnet to 13 and 19
