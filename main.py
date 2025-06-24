@@ -23,14 +23,25 @@ def load_config(config_path):
         config = yaml.safe_load(f)
     return config
 
-
 def main():
     parser = argparse.ArgumentParser(description="EEG Feature Extraction")
     parser.add_argument("--config", type=str, default="config.yaml", help="Path to config.yaml")
-    parser.add_argument("--multicore", action="store_true", help="Use multiple cores for processing")
-    parser.add_argument("--num_workers", type=int, default=None, help="Number of worker processes")
+
+    # Default multicore True unless --singlecore is provided
+    parser.add_argument("--singlecore", action="store_true", help="Run in single-core mode (for debugging)")
+
+    parser.add_argument("--num_workers", type=int, default=12, help="Number of worker processes")
     parser.add_argument("--batch_size", type=int, default=4, help="Number of features to process per batch")
+
     args = parser.parse_args()
+
+    # Determine mode
+    use_multicore = not args.singlecore
+
+    if use_multicore:
+        logger.info("Running in multi-core mode")
+    else:
+        logger.info("Running in single-core (debug) mode")
 
     config = load_config(args.config)
 
@@ -46,7 +57,7 @@ def main():
     files = os.listdir(data_dir)
     mat_files = [f for f in files if f.endswith(".mat")]
 
-    if args.multicore:
+    if use_multicore:
         logger.info("Starting multi-core processing")
         with concurrent.futures.ProcessPoolExecutor(max_workers=args.num_workers) as executor:
             futures = {
